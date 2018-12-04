@@ -1,0 +1,45 @@
+# Esto es equivalente a: from customwidgets.widgets import ImageButton
+#:import ImageButton customwidgets.widgets.ImageButton
+
+ScreenManager:
+    id: screen_manager
+    MenuScreen:
+        id: menu_screen
+        name: 'menu'
+        manager: 'screen_manager'
+    SettingsScreen:
+        id: settings_screen
+        name: 'settings'
+        manager: 'screen_manager'
+
+<MenuScreen>:
+    GridLayout:
+        cols: 4
+        ImageButton:
+            custom: 'rocket'
+            source: './src/img/rocket_128.png'
+            on_release: root.my_callback('btn1')
+        ImageButton:
+            custom: 'pin'
+            source: './src/img/pin_128.png'
+            on_release: root.my_callback('btn2')
+        ImageButton:
+            custom: 'postbox'
+            source: './src/img/postbox_128.png'
+            on_release: root.my_callback('btn3')
+        ImageButton:
+            custom: 'setting'
+            source: './src/img/setting_128.png'
+            on_release:
+                app.root.current = 'settings'
+                app.root.transition.direction = 'left'
+
+<SettingsScreen>:
+    BoxLayout:
+        Button:
+            text: 'My settings button'
+        Button:
+            text: 'Back to menu'
+            on_release:
+                app.root.current = 'menu'
+                app.root.transition.direction = 'right'

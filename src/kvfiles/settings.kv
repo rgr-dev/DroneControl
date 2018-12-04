@@ -1,0 +1,8 @@
+BoxLayout:
+    Button:
+        text: 'My settings button'
+    Button:
+        text: 'Back to menu'
+        on_release:
+            app.root.current = 'menu'
+            app.root.transition.direction = 'right'
