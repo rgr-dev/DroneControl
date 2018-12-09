@@ -11,22 +11,6 @@ from kivy.core.window import Window
 
 Window.clearcolor = (1, 1, 1, 1)  # Esto es para colocar el fondo de la ventana de color blanco
 
-# Esto lo delegue a un archivo .kv
-# Builder.load_string('''
-# <HelloWorldScreen>:
-#     cols: 3
-#     Label:
-#         text: 'Welcome to the Hello world'
-#     Button:
-#         text: 'Click me! %d' % root.counter
-#         on_release: root.my_callback()
-#     Label:
-#         text: 'Label 2'
-# ''')
-
-
-
-
 
 class MenuScreen(Screen):
     counter = NumericProperty(0)
