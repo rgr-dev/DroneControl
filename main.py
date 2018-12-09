@@ -20,10 +20,6 @@ class MenuScreen(Screen):
         self.counter += 1
 
 
-class SettingsScreen(Screen):
-    pass
-
-
 class DroneControllerApp(App):
     def build(self):
         print("init")

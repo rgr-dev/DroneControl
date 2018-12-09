@@ -1,5 +1,6 @@
 # Esto es equivalente a: from customwidgets.widgets import ImageButton
 #:import ImageButton customwidgets.widgets.ImageButton
+#:import SettingsScreen customwidgets.widgets.SettingsScreen
 
 ScreenManager:
     id: screen_manager
@@ -18,28 +19,21 @@ ScreenManager:
         ImageButton:
             custom: 'rocket'
             source: './src/img/rocket_128.png'
-            on_release: root.my_callback('btn1')
+            on_release: root.my_callback('rocket Button pressed')
         ImageButton:
             custom: 'pin'
             source: './src/img/pin_128.png'
-            on_release: root.my_callback('btn2')
+            on_release: root.my_callback('pin Button pressed')
         ImageButton:
             custom: 'postbox'
             source: './src/img/postbox_128.png'
-            on_release: root.my_callback('btn3')
+            on_release: root.my_callback('postbox Button pressed')
         ImageButton:
             custom: 'setting'
             source: './src/img/setting_128.png'
             on_release:
+                root.my_callback('settings Button pressed')
                 app.root.current = 'settings'
                 app.root.transition.direction = 'left'
 
 <SettingsScreen>:
-    BoxLayout:
-        Button:
-            text: 'My settings button'
-        Button:
-            text: 'Back to menu'
-            on_release:
-                app.root.current = 'menu'
-                app.root.transition.direction = 'right'
