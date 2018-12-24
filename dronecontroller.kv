@@ -1,6 +1,5 @@
 # Esto es equivalente a: from customwidgets.widgets import ImageButton
-#:import ImageButton customwidgets.widgets.ImageButton
-#:import SettingsScreen customwidgets.widgets.SettingsScreen
+#:import ImageButton dronemodules.widgets.ImageButton
 
 ScreenManager:
     id: screen_manager
@@ -8,9 +7,9 @@ ScreenManager:
         id: menu_screen
         name: 'menu'
         manager: 'screen_manager'
-    SettingsScreen:
-        id: settings_screen
-        name: 'settings'
+    SettingsView:
+        id: settingsview_screen
+        name: 'settingsview'
         manager: 'screen_manager'
 
 <MenuScreen>:
@@ -33,7 +32,7 @@ ScreenManager:
             source: './src/img/setting_128.png'
             on_release:
                 root.my_callback('settings Button pressed')
-                app.root.current = 'settings'
+                app.root.current = 'settingsview'
                 app.root.transition.direction = 'left'
 
-<SettingsScreen>:
+<settingsview>:

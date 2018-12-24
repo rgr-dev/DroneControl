@@ -1,0 +1,66 @@
+<SettingsView@SettingScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10, 10, 10, 6
+
+# Boton conectar
+        GridLayout:
+            cols: 2
+            size_hint: 1, .10
+            padding: 0, 0, 0, 10
+            TextInput:
+                size_hint: .8, 1
+                hint_text: 'Drone IP'
+                font_size: 25
+                multiline: False
+            ToggleButton:
+                size_hint: .2, 1
+                text: 'Connect'
+                background_color: .7, .7, 1, 1
+                on_release:
+                    root.do_test('test')
+
+# Ventana de los logs
+        GridLayout:
+            cols: 1
+            size_hint: 1, .86
+            padding: 0, 0, 0, 10
+
+            GridLayout:
+                cols: 3
+                orientation: 'vertical'
+                size_hint: 1, .05
+                canvas:
+                    Color:
+                        rgba: .60, .60, .60, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Spinner:
+                    size_hint: .2, 1
+                    text: 'Log Level'
+                    values: 'Info', 'Warning', 'Error'
+                GridLayout:
+                    cols: 1
+                    size_hint: .7, 1
+                Button:
+                    text: 'Refresh'
+                    size_hint: .1, 1
+
+            ScrollView:
+                size_hint: 1, .95
+                TextInput:
+                    id: f_but
+                    text: root.log_text
+                    readonly: True
+                    keyboard_mode: 'managed'
+                    multiline: True
+
+# Boton para regresar al main menu
+        GridLayout:
+            cols:1
+            size_hint: 1, .04
+            Button:
+                text: 'Back'
+                on_release:
+                    app.root.current = 'menu'
