@@ -58,8 +58,9 @@ class SettingScreen(Screen):
 
     def do_test(self, texto):
         # LOGGERFIX: Crear un archivo de configuracion para el logger
-        log = logging.getLogger("my.logger")
+        log = logging.getLogger("Control")
         log.level = logging.DEBUG
+        # log.level = logging.INFO
         log.addHandler(MyLabelHandler(self.ids['f_but'], logging.DEBUG))
 
         _thread.start_new(my_thread, (log,))
