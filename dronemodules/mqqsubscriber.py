@@ -30,14 +30,18 @@ class MQTTSubscriber:
 
     # The callback for when a PUBLISH message is received from the server.
     def _on_message(self, client, userdata, msg):
-        self.log.info("%s %s", msg.topic, str(msg.payload))
+        self.log.debug("Message: %s, Topic: %s", msg.payload.decode(), msg.topic)
+        self.log.info("Incoming Message: %s", msg.payload.decode())
         print(msg.topic + " " + str(msg.payload))
 
     def run(self):
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
 
-        self.log.info("Connecting with Topic\"%s\" host:%s port:%s", self.topic, self.host, self.port)
+        self.log.info("Connecting with [b]Topic:[/b]\"[color=#0000cc]%s[/color]\" "
+                      "[b]host:[/b][color=#0000cc] %s[/color] "
+                      "[b]port:[/b][color=#0000cc]%s[/color]",
+                      self.topic, self.host, self.port)
         self.client.connect(self.host, self.port, self.keep_alive)
 
         # Blocking call that processes network traffic, dispatches callbacks and
