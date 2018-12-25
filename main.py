@@ -11,19 +11,34 @@ from kivy.properties import StringProperty
 
 import logging
 import _thread
-from  dronemodules.widgets import *
 
+from  dronemodules.widgets import *
 from dronemodules.controlloger import MyLabelHandler
+from dronemodules.mqqsubscriber import MQTTSubscriber
+
+
+ROWS = ['Goc', 'COC', 'EEE', 'abs' , 'kju' , 'iop' , 'nmg', 'gty', 'jkio', 'dbkgcd' , 'udbcbjkb']
 
 # KV Files con las vistas de la app
 Builder.load_file('kvFiles/settingscreen.kv')
 Window.clearcolor = (1, 1, 1, 1)  # Esto es para colocar el fondo de la ventana de color blanco
 
+MQQT_DISCONNECT = False
+mqtt_subscriber = None
+
 
 def my_thread(log):
-    for i in range(10):
-        time.sleep(1)
-        log.info("\nWOO %s", i)
+    global mqtt_subscriber
+    mqtt_subscriber = MQTTSubscriber(log)
+    mqtt_subscriber.run()
+    # while True:
+    #    if MQQT_DISCONNECT:
+    #        break
+    # mqttsubscriber.disconnect()
+
+    # for i in range(10):
+    #    time.sleep(1)
+    #    log.info("\nWOO %s", i)
 
 
 class MenuScreen(Screen):
@@ -39,15 +54,16 @@ class SettingScreen(Screen):
 
     def __init__(self, **kwargs):
         super(SettingScreen, self).__init__(**kwargs)
-        self.log_text = 'test 1'
+        # self.log_text = '[b][color=ff3333]Hello[/color][/b]'
 
     def do_test(self, texto):
+        # LOGGERFIX: Crear un archivo de configuracion para el logger
         log = logging.getLogger("my.logger")
         log.level = logging.DEBUG
         log.addHandler(MyLabelHandler(self.ids['f_but'], logging.DEBUG))
 
         _thread.start_new(my_thread, (log,))
-        self.log_text = cambiar_texto()
+        # self.log_text = cambiar_texto()
         print(texto)
 
 

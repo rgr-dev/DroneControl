@@ -47,14 +47,26 @@
                     text: 'Refresh'
                     size_hint: .1, 1
 
-            ScrollView:
+            BoxLayout:
                 size_hint: 1, .95
-                TextInput:
-                    id: f_but
-                    text: root.log_text
-                    readonly: True
-                    keyboard_mode: 'managed'
-                    multiline: True
+                canvas:
+                    Color:
+                        # rgba: 0.901960784314, 1, 0.901960784314, 1
+                        rgba: 0.901960784314, 0.949019607843, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                ScrollView:
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        Label:
+                            id: f_but
+                            size_hint_y: None
+                            text: root.log_text
+                            markup: True
+                            height: self.texture_size[1]
 
 # Boton para regresar al main menu
         GridLayout:
