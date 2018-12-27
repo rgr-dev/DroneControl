@@ -57,16 +57,21 @@
                         pos: self.pos
                         size: self.size
                 ScrollView:
-                    BoxLayout:
+                    GridLayout:
+                        cols: 1
                         orientation: "vertical"
                         size_hint_y: None
+                        size_hint_x: None
                         height: self.minimum_height
+                        width: self.minimum_width
                         Label:
                             id: f_but
-                            size_hint_y: None
                             text: root.log_text
                             markup: True
+                            size_hint_y: None
+                            size_hint_x: None
                             height: self.texture_size[1]
+                            width: self.texture_size[0]
 
 # Boton para regresar al main menu
         GridLayout:
