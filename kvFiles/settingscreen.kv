@@ -9,6 +9,7 @@
             size_hint: 1, .10
             padding: 0, 0, 0, 10
             TextInput:
+                id: drone_ip
                 size_hint: .8, 1
                 hint_text: 'Drone IP'
                 font_size: 25
@@ -18,7 +19,7 @@
                 text: 'Connect'
                 background_color: .7, .7, 1, 1
                 on_release:
-                    root.do_test('test')
+                    root.do_test(drone_ip.text)
 
 # Ventana de los logs
         GridLayout:
@@ -65,7 +66,7 @@
                         height: self.minimum_height
                         width: self.minimum_width
                         Label:
-                            id: f_but
+                            id: log_box
                             text: root.log_text
                             markup: True
                             size_hint_y: None

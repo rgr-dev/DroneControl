@@ -14,7 +14,7 @@ ScreenManager:
 
 <MenuScreen>:
     GridLayout:
-        cols: 4
+        cols: 3
         ImageButton:
             custom: 'rocket'
             source: './src/img/rocket_128.png'
@@ -23,10 +23,10 @@ ScreenManager:
             custom: 'pin'
             source: './src/img/pin_128.png'
             on_release: root.my_callback('pin Button pressed')
-        ImageButton:
-            custom: 'postbox'
-            source: './src/img/postbox_128.png'
-            on_release: root.my_callback('postbox Button pressed')
+        # ImageButton:
+        #    custom: 'postbox'
+        #    source: './src/img/postbox_128.png'
+        #    on_release: root.my_callback('postbox Button pressed')
         ImageButton:
             custom: 'setting'
             source: './src/img/setting_128.png'
