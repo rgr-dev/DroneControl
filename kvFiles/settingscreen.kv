@@ -5,21 +5,28 @@
 
 # Boton conectar
         GridLayout:
-            cols: 2
+            cols: 3
             size_hint: 1, .10
             padding: 0, 0, 0, 10
             TextInput:
-                id: drone_ip
-                size_hint: .8, 1
+                id: drone_sock_ip
+                size_hint: .6, 1
                 hint_text: 'Drone IP'
                 font_size: 25
                 multiline: False
+            TextInput:
+                id: drone_sock_port
+                size_hint: .2, 1
+                hint_text: 'Port'
+                font_size: 25
+                multiline: False
             ToggleButton:
+                id: connect_button
                 size_hint: .2, 1
                 text: 'Connect'
                 background_color: .7, .7, 1, 1
                 on_release:
-                    root.do_test(drone_ip.text)
+                    root.init_drone_connection(self, drone_sock_ip.text, drone_sock_port.text)
 
 # Ventana de los logs
         GridLayout:

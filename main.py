@@ -3,11 +3,9 @@ kivy.require('1.9.0')  # replace with your current kivy version !
 
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
-from kivy.properties import NumericProperty
+from kivy.properties import *
 from kivy.lang import Builder
 from kivy.core.window import Window
-
-from kivy.properties import StringProperty
 
 import logging
 import _thread
@@ -22,20 +20,21 @@ Window.clearcolor = (1, 1, 1, 1)  # Esto es para colocar el fondo de la ventana 
 
 MQQT_DISCONNECT = False
 mqtt_subscriber = None
+log = None
 
 
-def my_thread(log, drone_address):
+def connection_thread(logger, drone_ip, drone_port):
     global mqtt_subscriber
-    mqtt_subscriber = MQTTSubscriber(log)
-    mqtt_subscriber.run()
-    # while True:
-    #    if MQQT_DISCONNECT:
-    #        break
-    # mqttsubscriber.disconnect()
+    if mqtt_subscriber is None:
+        mqtt_subscriber = MQTTSubscriber(logger)
+        mqtt_subscriber.run()
+    else:
+        mqtt_subscriber.fast_connection()
 
-    # for i in range(10):
-    #    time.sleep(1)
-    #    log.info("\nWOO %s", i)
+
+def disconnect_drone():
+    global mqtt_subscriber
+    mqtt_subscriber.disconnect()
 
 
 class MenuScreen(Screen):
@@ -52,15 +51,24 @@ class SettingScreen(Screen):
     def __init__(self, **kwargs):
         super(SettingScreen, self).__init__(**kwargs)
 
-    def do_test(self, drone_address):
-        # LOGGERFIX: Crear un archivo de configuracion para el logger
-        log = logging.getLogger("Control")
-        log.level = logging.DEBUG
-        # log.level = logging.INFO
-        log.addHandler(MyLabelHandler(self.ids['log_box'], logging.DEBUG))
+    def init_drone_connection(self, connect_btn, drone_ip, drone_port):
+        global log
+        btn_state = connect_btn.state
+        if drone_ip and drone_port:
+            if btn_state == 'down':
+                # LOGGERFIX: Crear un archivo de configuracion para el logger
+                if log is None:
+                    log = logging.getLogger("Control")
+                    log.level = logging.DEBUG
+                    # log.level = logging.INFO
+                    log.addHandler(MyLabelHandler(self.ids['log_box'], logging.DEBUG))
 
-        _thread.start_new(my_thread, (log, drone_address,))
-        print(drone_address)
+                _thread.start_new(connection_thread, (log, drone_ip, drone_port,))
+                connect_btn.text = 'Disconnect'
+                print('%s:%s', drone_ip, drone_port)
+            elif btn_state == 'normal':
+                disconnect_drone()
+                connect_btn.text = 'Connect'
 
 
 class DroneControllerApp(App):

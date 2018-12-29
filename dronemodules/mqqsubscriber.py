@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import time
 
 
 class MQTTSubscriber:
@@ -35,6 +36,7 @@ class MQTTSubscriber:
         print(msg.topic + " " + str(msg.payload))
 
     def run(self):
+        self.log.info("Init MQTT Broker connection...")
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
 
@@ -42,16 +44,26 @@ class MQTTSubscriber:
                       "[b]host:[/b][color=#0000cc] %s[/color] "
                       "[b]port:[/b][color=#0000cc]%s[/color]",
                       self.topic, self.host, self.port)
-        self.client.connect(self.host, self.port, self.keep_alive)
+        self.fast_connection()
 
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
-        self.client.loop_forever()
+        # self.client.loop_forever()
+        self.client.loop_start()
 
     def disconnect(self):
+        self.log.info("Disconnecting from MQTT Broker channel...")
+        self.client.loop_stop()
         self.client.disconnect()
+        self.log.info("MQTT connection finished.")
+
+    def fast_connection(self):
+        self.log.info("Connecting...")
+        time.sleep(1)
+        self.client.connect(self.host, self.port, self.keep_alive)
+        self.log.info("Now Connected,")
 
     def process_returncode(self, code):
         if code == 0:
