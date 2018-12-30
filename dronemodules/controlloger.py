@@ -1,7 +1,6 @@
-from dronemodules.droneformatter import DroneFormatter
-
-from kivy.clock import Clock
 import logging
+from kivy.clock import Clock
+from dronemodules.droneformatter import DroneFormatter
 
 
 class MyLabelHandler(logging.Handler):

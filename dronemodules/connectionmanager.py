@@ -4,26 +4,29 @@ import _pickle as cPickle
 
 from dronemodules.mqqsubscriber import MQTTSubscriber
 
-class DroneConnectionDriver:
 
+class DroneConnectionDriver:
     def __init__(self, logger, sock_host, sock_port=50000):
         self.logger = logger
         self.sock_host = sock_host
         self.sock_port = int(sock_port)
+        self.conection_done = False
 
     def init_comm_config_process(self):
         try:
             self.logger.info("Initializing Drone communication...")
-            # Paso 1 Connectar con el drone
+            # Paso 1 Connect with drone
             self._establish_drone_connection()
-            # Paso 2 Pedir datos de conexion y credenciales MQTT
-            # Paso 3 Connectarse al broker MQTT y subscribirse al topico correspondiente
+            # Paso 2 Ask for Connection parameters and MQTT credentials
+            # Paso 3 Connect to the MQTT broker and Topic subscription
             self._MQTT_connection()
+            # Wait until the MQTT connection happens
             while not self.__mqtt_subs.is_connected():
                 time.sleep(1)
+            self.conection_done = True
             self.logger.info("All Communication config finished successfully.")
         except ConnectionRefusedError:
-            self.logger.error("Cannection Refused. Maybe the drone is power off?")
+            self.logger.error("Connection Refused. Maybe the drone is power off?")
 
     def _establish_drone_connection(self):
         self.logger.info("Connecting with drone...")
@@ -51,10 +54,11 @@ class DroneConnectionDriver:
         self.__socket_client.close_connection()
         self.__mqtt_subs.disconnect()
 
+    def connected(self):
+        return self.conection_done
 
 
 class SocketClientManager:
-
     def __init__(self, logger, host, port):
         self.host = host
         self.port = port

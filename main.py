@@ -1,3 +1,5 @@
+import logging
+import _thread
 import kivy
 kivy.require('1.9.0')  # replace with your current kivy version !
 
@@ -5,21 +7,16 @@ from kivy.app import App
 from kivy.properties import *
 from kivy.lang import Builder
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 
-import logging
-import _thread
-
-from dronemodules.widgets import *
 from dronemodules.controlloger import MyLabelHandler
 from dronemodules.connectionmanager import DroneConnectionDriver
 
-# KV Files con las vistas de la app
+# KV Files with app views
 Builder.load_file('src/kvfiles/settingscreen.kv')
-Window.clearcolor = (1, 1, 1, 1)  # Esto es para colocar el fondo de la ventana de color blanco
+Window.clearcolor = (1, 1, 1, 1)  # This turn white background
 
-MQQT_DISCONNECT = False
 drone_connection_driver = None
-mqtt_subscriber = None
 log = None
 
 
@@ -28,11 +25,16 @@ def init_connection(logger, drone_ip, drone_port):
     if drone_connection_driver is None:
         drone_connection_driver = DroneConnectionDriver(logger, drone_ip, drone_port)
         drone_connection_driver.init_comm_config_process()
+    else:
+        drone_connection_driver.init_comm_config_process()
 
 
 def disconnect_drone():
     global drone_connection_driver
-    drone_connection_driver.stop_drone_connection()
+    if drone_connection_driver.connected():
+        drone_connection_driver.stop_drone_connection()
+    else:
+        print("Drone disconnected.")
 
 
 class MenuScreen(Screen):

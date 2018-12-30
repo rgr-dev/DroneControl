@@ -60,7 +60,7 @@ class MQTTSubscriber:
         self.log.info("Disconnecting from MQTT Broker channel...")
         self.client.loop_stop()
         self.client.disconnect()
-        self.log.info("MQTT connection finished.")
+        self.log.info("MQTT connection ended.")
 
     def fast_connection(self):
         """

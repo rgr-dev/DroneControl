@@ -9,7 +9,7 @@ class DroneFormatter(logging.Formatter):
     def format(self, record):
         message = super(DroneFormatter, self).format(record)
         if record.levelname == "DEBUG":
-            message = "\n[color=#00c100]" + message.replace("DEBUG", "DEB", 1) + "[/color]"
+            message = "\n[color=#00c100][i]" + message.replace("DEBUG", "DEB", 1) + "[/i][/color]"
         elif record.levelname == "INFO":
             message = "\n[color=#000000]" + message.replace("INFO", "INF", 1) + "[/color]"
         elif record.levelname == "WARNING":
