@@ -4,7 +4,7 @@ import time
 
 class MQTTSubscriber:
 
-    CODE_MESSAGES = {0: "Connection successful",
+    CODE_MESSAGES = {0: "MQTT Connection successful",
                      1: "Connection refused - incorrect protocol version",
                      2: "Connection refused - invalid client identifier",
                      3: "Connection refused - server unavailable",
