@@ -1,3 +1,4 @@
 .idea/
 /test
 /paho
+/__pycache__/
