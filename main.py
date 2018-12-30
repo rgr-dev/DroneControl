@@ -14,7 +14,7 @@ from dronemodules.controlloger import MyLabelHandler
 from dronemodules.connectionmanager import DroneConnectionDriver
 
 # KV Files con las vistas de la app
-Builder.load_file('kvFiles/settingscreen.kv')
+Builder.load_file('src/kvfiles/settingscreen.kv')
 Window.clearcolor = (1, 1, 1, 1)  # Esto es para colocar el fondo de la ventana de color blanco
 
 MQQT_DISCONNECT = False
